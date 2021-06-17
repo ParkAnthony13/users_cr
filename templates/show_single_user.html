@@ -12,17 +12,16 @@
 
 <body>
     <div class="container">
-        <div class="add">
-            <h1>Add a Friend</h1>
-            <form action="/users/new_process" method="POST">
-                <label for="fname">First Name:</label>
-                <input type="text" name="fname">
-                <label for="lname">Last Name:</label>
-                <input type="text" name="lname">
-                <label for="email">email:</label>
-                <input type="text" name="email">
-                <input type="submit" value="Add User">
-            </form>
+        <div class="single_user">
+            <h1>User {{ show_single.id }}</h1>
+            <div class="info">
+                <p>{{ show_single.first_name }} {{ show_single.last_name }}</p>
+                <p>Email: {{ show_single.email }}</p>
+                <p>Created On: {{ show_single.created_at }}</p>
+                <p>Last Updated On: {{ show_single.updated_at }}</p>
+            </div>
+            <a href="/users/{{ show_single.id }}/edit">Edit</a>
+            <a href="/users/{{ show_single.id }}/delete">Delete</a>
         </div>
         <a href="/">Home</a>
     </div>

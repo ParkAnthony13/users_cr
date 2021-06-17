@@ -25,7 +25,30 @@ class User:
             users.append(cls(user))
         return users
 
-    @classmethod
+    @classmethod #creating a new user
     def save(cls, data):
         query = "INSERT INTO users(first_name,last_name,email,created_at,updated_at) VALUES ( %(fname)s , %(lname)s , %(email)s , NOW() , NOW() );"
         return connectToMySQL('users_schema').query_db(query, data)
+
+    @classmethod #select single user
+    def select_single(cls, data):
+        query = "SELECT * FROM users WHERE id=%(id)s;"
+        result = connectToMySQL('users_schema').query_db(query, data)
+        print(result)
+        return User(result[0])
+
+    @classmethod #select most last on the list
+    def last(cls,data):
+        query = "SELECT id FROM users ORDER BY id DESC LIMIT 1;"
+        return connectToMySQL('users_schema').query_db(query)
+
+    @classmethod #delete user
+    def delete(cls, data):
+        query = "DELETE FROM users WHERE id=%(id)s;"
+        connectToMySQL('users_schema').query_db(query, data)
+        return True
+
+    @classmethod #update user
+    def update(cls, data):
+        query = "UPDATE users SET first_name=%(fname)s,last_name=%(lname)s,email=%(email)s,created_at=NOW(),updated_at=NOW() WHERE id=%(id)s;"
+        connectToMySQL('users_schema').query_db(query, data)
